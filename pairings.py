@@ -79,7 +79,7 @@ ltf_write(pairs, "used_pairs.csv", True)
 ltf_write(pairs, "pairs.csv", False)
 print(pairs)
 
-#duplicate pair identifier, for debugging purposes only
+#duplicate pair/triplet identifier, for debugging purposes only
 with open('used_pairs.csv') as f:
     seen = set()
     for line in f:
