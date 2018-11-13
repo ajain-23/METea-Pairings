@@ -13,7 +13,6 @@ with open("used_pairs.csv", 'r') as fp:
         if lists[-1] == '':
             lists.pop(-1)
 
-
 co_21 = [names[i] for i in range(0, 40)]
 co_22 = [names[i] for i in range(40, 92)]
 
