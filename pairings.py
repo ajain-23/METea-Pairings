@@ -77,6 +77,8 @@ make_pairs(co_21, co_22)
 ltf_write(with_triplets, "used_pairs.csv", True)
 ltf_write(pairs, "pairs.csv", False)
 
+print("{} unique pairs created. Success!".format(len(pairs)))
+
 #duplicate pair/triplet identifier, for debugging purposes only
 with open('used_pairs.csv') as f:
     seen = set()
