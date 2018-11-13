@@ -1,0 +1,93 @@
+import csv, random
+from csv import reader as csvreader
+from itertools import count
+
+
+def names_21(li):
+    for i in range(0, 40): #file start to co21 end
+        yield li[i]
+
+def names_22(li):
+    for i in range(40, 92): #co21 end to file end (aka co22)
+        yield li[i]
+
+with open("names.csv", 'r') as fp:
+    reader = csvreader(fp)
+    names = list(reader)
+
+co_21 = list(names_21(names))
+co_22 = list(names_22(names))
+
+with open("used_pairs.csv", 'r') as fp:
+    reader = csvreader(fp)
+    li = list(reader)
+
+def used_pairs():
+    for i in count():
+        try:
+            yield li[i]
+        except IndexError:
+            break
+
+def ltf_write(guest_list, filename, add):
+    """Write the list to csv file."""
+    if not add:
+        with open(filename, "w") as outfile:
+            for list in guest_list:
+                for entry in list:
+                    outfile.write(entry + ", ")
+                outfile.write("\n")
+    else:
+        with open(filename,'a') as outfile:
+            for list in guest_list:
+                for entry in list:
+                    outfile.write(entry + ",")
+                outfile.write("\n")
+
+
+pairs = []
+used_pairs = list(used_pairs())
+for lists in used_pairs:
+    if lists[-1] == '':
+        lists.pop(-1)
+
+def make_pairs(li_1, li_2):
+    for i in range(0, len(li_1)):
+        name_1, name_2 = random.choice(li_1), random.choice(li_2)
+        pair_init = [name_1[0], name_2[0]]
+        if pair_init in used_pairs:
+            while pair_init in used_pairs:
+                name_1, name_2 = random.choice(li_1), random.choice(li_2)
+                pair_init = [name_1[0], name_2[0]]
+
+        li_1.remove(name_1)
+        li_2.remove(name_2)
+        pairs.append(pair_init)
+
+    while len(li_2) > 0:
+        name_3 = random.choice(li_2)
+        pair_final = random.choice(pairs)
+        if len(pair_final) == 2:
+            pair_final.append(name_3[0])
+            li_2.remove(name_3)
+
+    for i in range(0, len(pairs)):
+        used_pairs.append(pairs[i])
+    #used_pairs.append(pairs)
+
+
+make_pairs(co_21, co_22)
+print(pairs)
+ltf_write(pairs, "used_pairs.csv", True)
+ltf_write(pairs, "pairs.csv", False)
+print(used_pairs)
+
+
+with open('used_pairs.csv') as f:
+    seen = set()
+    for line in f:
+        line_lower = line.lower()
+        if line_lower in seen:
+            print(line)
+        else:
+            seen.add(line_lower)
