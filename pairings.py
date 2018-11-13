@@ -8,23 +8,16 @@ with open("names.csv", 'r') as fp:
 
 with open("used_pairs.csv", 'r') as fp:
     reader = csvreader(fp)
-    exceptions = list(reader)
+    used_pairs = list(reader)
+    for lists in used_pairs: #lazily dealing with badly formatted elements, works efficiently otherwise
+        if lists[-1] == '':
+            lists.pop(-1)
 
-def used_pairs():
-    for i in count():
-        try:
-            yield exceptions[i]
-        except IndexError:
-            break
 
 co_21 = [names[i] for i in range(0, 40)]
 co_22 = [names[i] for i in range(40, 92)]
 
 pairs, with_triplets = [], []
-used_pairs = list(used_pairs())
-for lists in used_pairs: #lazily dealing with badly formatted elements, works efficiently otherwise
-    if lists[-1] == '':
-        lists.pop(-1)
 
 def ltf_write(guest_list, filename, appending):
     """Write the list to csv file."""
