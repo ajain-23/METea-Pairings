@@ -2,15 +2,6 @@ import csv, random
 from csv import reader as csvreader
 from itertools import count
 
-
-def names_21(li):
-    for i in range(0, 40): #file start to co21 end
-        yield li[i]
-
-def names_22(li):
-    for i in range(40, 92): #co21 end to file end (aka co22)
-        yield li[i]
-
 with open("names.csv", 'r') as fp:
     reader = csvreader(fp)
     names = list(reader)
@@ -26,11 +17,12 @@ def used_pairs():
         except IndexError:
             break
 
-co_21 = list(names_21(names))
-co_22 = list(names_22(names))
+co_21 = [names[i] for i in range(0, 40)]
+co_22 = [names[i] for i in range(40, 92)]
+
 pairs = []
 used_pairs = list(used_pairs())
-for lists in used_pairs: #lazily dealing with badly written elements, works efficiently otherwise
+for lists in used_pairs: #lazily dealing with badly formatted elements, works efficiently otherwise
     if lists[-1] == '':
         lists.pop(-1)
 
