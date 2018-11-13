@@ -73,14 +73,11 @@ def make_pairs(li_1, li_2):
 
     for i in range(0, len(pairs)):
         used_pairs.append(pairs[i])
-    #used_pairs.append(pairs)
-
 
 make_pairs(co_21, co_22)
-print(pairs)
 ltf_write(pairs, "used_pairs.csv", True)
 ltf_write(pairs, "pairs.csv", False)
-print(used_pairs)
+print(pairs)
 
 #duplicate pair identifier, for debugging purposes only
 with open('used_pairs.csv') as f:
