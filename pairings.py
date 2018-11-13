@@ -35,7 +35,10 @@ def ltf_write(guest_list, filename, appending):
         with open(filename, "w") as outfile:
             for list in guest_list:
                 for entry in list:
-                    outfile.write(entry + ", ")
+                    if list[-1] == entry:
+                        outfile.write(entry)
+                    else:
+                        outfile.write(entry + ", ")
                 outfile.write("\n")
     else:
         with open(filename,'a') as outfile:
