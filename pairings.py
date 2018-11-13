@@ -47,7 +47,7 @@ def ltf_write(guest_list, filename, add):
 
 pairs = []
 used_pairs = list(used_pairs())
-for lists in used_pairs:
+for lists in used_pairs: #lazily dealing with badly written elements, works efficiently otherwise
     if lists[-1] == '':
         lists.pop(-1)
 
