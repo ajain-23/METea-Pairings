@@ -29,9 +29,9 @@ def used_pairs():
         except IndexError:
             break
 
-def ltf_write(guest_list, filename, add):
+def ltf_write(guest_list, filename, appending):
     """Write the list to csv file."""
-    if not add:
+    if not appending:
         with open(filename, "w") as outfile:
             for list in guest_list:
                 for entry in list:
