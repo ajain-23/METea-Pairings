@@ -14,20 +14,25 @@ def names_22(li):
 with open("names.csv", 'r') as fp:
     reader = csvreader(fp)
     names = list(reader)
-
-co_21 = list(names_21(names))
-co_22 = list(names_22(names))
-
+    
 with open("used_pairs.csv", 'r') as fp:
     reader = csvreader(fp)
-    li = list(reader)
-
+    exceptions = list(reader)
+    
 def used_pairs():
     for i in count():
         try:
-            yield li[i]
+            yield exceptions[i]
         except IndexError:
             break
+            
+co_21 = list(names_21(names))
+co_22 = list(names_22(names))
+pairs = []
+used_pairs = list(used_pairs())
+for lists in used_pairs: #lazily dealing with badly written elements, works efficiently otherwise
+    if lists[-1] == '':
+        lists.pop(-1)
 
 def ltf_write(guest_list, filename, appending):
     """Write the list to csv file."""
@@ -46,13 +51,6 @@ def ltf_write(guest_list, filename, appending):
                 for entry in list:
                     outfile.write(entry + ",")
                 outfile.write("\n")
-
-
-pairs = []
-used_pairs = list(used_pairs())
-for lists in used_pairs: #lazily dealing with badly written elements, works efficiently otherwise
-    if lists[-1] == '':
-        lists.pop(-1)
 
 def make_pairs(li_1, li_2):
     for i in range(0, len(li_1)):
