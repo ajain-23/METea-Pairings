@@ -14,18 +14,18 @@ def names_22(li):
 with open("names.csv", 'r') as fp:
     reader = csvreader(fp)
     names = list(reader)
-    
+
 with open("used_pairs.csv", 'r') as fp:
     reader = csvreader(fp)
     exceptions = list(reader)
-    
+
 def used_pairs():
     for i in count():
         try:
             yield exceptions[i]
         except IndexError:
             break
-            
+
 co_21 = list(names_21(names))
 co_22 = list(names_22(names))
 pairs = []
@@ -56,10 +56,9 @@ def make_pairs(li_1, li_2):
     for i in range(0, len(li_1)):
         name_1, name_2 = random.choice(li_1), random.choice(li_2)
         pair_init = [name_1[0], name_2[0]]
-        if pair_init in used_pairs:
-            while pair_init in used_pairs:
-                name_1, name_2 = random.choice(li_1), random.choice(li_2)
-                pair_init = [name_1[0], name_2[0]]
+        while pair_init in used_pairs:
+            name_1, name_2 = random.choice(li_1), random.choice(li_2)
+            pair_init = [name_1[0], name_2[0]]
 
         li_1.remove(name_1)
         li_2.remove(name_2)
@@ -78,7 +77,6 @@ def make_pairs(li_1, li_2):
 make_pairs(co_21, co_22)
 ltf_write(pairs, "used_pairs.csv", True)
 ltf_write(pairs, "pairs.csv", False)
-print(pairs)
 
 #duplicate pair/triplet identifier, for debugging purposes only
 with open('used_pairs.csv') as f:
