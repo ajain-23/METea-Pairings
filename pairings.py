@@ -20,7 +20,7 @@ def used_pairs():
 co_21 = [names[i] for i in range(0, 40)]
 co_22 = [names[i] for i in range(40, 92)]
 
-pairs = []
+pairs, with_triplets = [], []
 used_pairs = list(used_pairs())
 for lists in used_pairs: #lazily dealing with badly formatted elements, works efficiently otherwise
     if lists[-1] == '':
@@ -59,15 +59,22 @@ def make_pairs(li_1, li_2):
     while len(li_2) > 0:
         name_3 = random.choice(li_2)
         pair_final = random.choice(pairs)
+        while [pair_final[0], name_3[0]] in used_pairs or pair_final in used_pairs or [pair_final[1], name_3[0]] in used_pairs:
+            pair_final = random.choice(pairs)
         if len(pair_final) == 2:
             pair_final.append(name_3[0])
+
+            with_triplets.append([pair_final[0], pair_final[1]])
+            with_triplets.append([pair_final[0], pair_final[2]])
+            with_triplets.append([pair_final[1], pair_final[2]])
+
             li_2.remove(name_3)
 
     for i in range(0, len(pairs)):
-        used_pairs.append(pairs[i])
+        with_triplets.append(pairs[i])
 
 make_pairs(co_21, co_22)
-ltf_write(pairs, "used_pairs.csv", True)
+ltf_write(with_triplets, "used_pairs.csv", True)
 ltf_write(pairs, "pairs.csv", False)
 
 #duplicate pair/triplet identifier, for debugging purposes only
