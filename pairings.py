@@ -65,13 +65,19 @@ def make_pairs(li_1, li_2):
     for i in range(0, len(pairs)):
         with_triplets.append(pairs[i])
 
-make_pairs(co_21, co_22)
-ltf_write(with_triplets, "used_pairs.csv", True)
-ltf_write(pairs, "pairs.csv", False)
 
-print("{} unique pairs created. Success!".format(len(pairs)))
+def matchmaker():
+    ''' Created a function despite not having explicit purpose
+        b/c allows for easier additions and modifications. '''
+    make_pairs(co_21, co_22)
+    ltf_write(with_triplets, "used_pairs.csv", True)
+    ltf_write(pairs, "pairs.csv", False)
 
-#duplicate pair/triplet identifier, for debugging purposes only
+    print("{} unique pairs created. Success!".format(len(pairs)))
+
+matchmaker() # Finalize pairings and output to pairs.csv + add them to used_pairs registry
+
+# Duplicate pair/triplet identifier, for debugging purposes only
 with open('used_pairs.csv') as f:
     seen = set()
     for line in f:
@@ -80,3 +86,14 @@ with open('used_pairs.csv') as f:
             print(line)
         else:
             seen.add(line_lower)
+
+# Identifies MET Students who have not yet submitted appropriate Google Form, not part of pairing algorithm
+with open("form_sub.csv", 'r') as fp:
+    reader = csvreader(fp)
+    form_names = list(reader)
+
+a_list = [co_21[j] for j in range(len(co_21)) if co_21[j] not in form_names]
+another_list = [co_22[j] for j in range(len(co_22)) if co_22[j] not in form_names]
+
+ltf_write(a_list, "no_sub.csv", False)
+ltf_write(another_list, "no_sub.csv", True)
