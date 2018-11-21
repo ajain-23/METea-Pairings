@@ -92,8 +92,8 @@ with open("form_sub.csv", 'r') as fp:
     reader = csvreader(fp)
     form_names = list(reader)
 
-a_list = [co_21[j] for j in range(len(co_21)) if co_21[j] not in form_names]
-another_list = [co_22[j] for j in range(len(co_22)) if co_22[j] not in form_names]
+nosub_21 = [co_21[j] for j in range(len(co_21)) if co_21[j] not in form_names]
+nosub_22 = [co_22[j] for j in range(len(co_22)) if co_22[j] not in form_names]
 
-ltf_write(a_list, "no_sub.csv", False)
-ltf_write(another_list, "no_sub.csv", True)
+ltf_write(nosub_21, "no_sub.csv", False)
+ltf_write(nosub_22, "no_sub.csv", True)
