@@ -75,7 +75,6 @@ def matchmaker():
 
     print("{} unique pairs created. Success!".format(len(pairs)))
 
-matchmaker() # Finalize pairings and output to pairs.csv + add them to used_pairs registry
 
 # Duplicate pair/triplet identifier, for debugging purposes only
 with open('used_pairs.csv') as f:
@@ -97,3 +96,5 @@ nosub_22 = [co_22[j] for j in range(len(co_22)) if co_22[j] not in form_names]
 
 ltf_write(nosub_21, "no_sub.csv", False)
 ltf_write(nosub_22, "no_sub.csv", True)
+
+matchmaker() # Finalize pairings and output to pairs.csv + add them to used_pairs registry
